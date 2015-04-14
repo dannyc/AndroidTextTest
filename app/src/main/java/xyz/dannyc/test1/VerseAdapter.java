@@ -15,12 +15,45 @@ import java.util.List;
 public class VerseAdapter extends ArrayAdapter<String>{
 
     private List<String> verses;
+    private int textSize = 14;
+    private static Integer currentChapter = 1;
     private Context context;
-    public VerseAdapter(Context context, List<String> verses) {
-        super(context, R.layout.pasuk, verses);
-        this.context = context;
-        this.verses = verses;
+    private static VerseDB verseDB = new VerseDB();
 
+    public VerseAdapter(Context context) {
+        super(context, R.layout.pasuk, verseDB.getChapter(currentChapter));
+        this.context = context;
+        this.verses = verseDB.getChapter(currentChapter);
+    }
+
+    public void nextChapter(){
+        if(currentChapter < VerseDB.MAX){
+            currentChapter += 1;
+            notifyDataSetChanged();
+        }
+    }
+    public void previousChapter(){
+        if(currentChapter > 1){
+            currentChapter -= 1;
+            notifyDataSetChanged();
+        }
+    }
+
+
+    public void increaseTextSize(){
+        this.textSize += 2;
+        notifyDataSetChanged();
+    }
+
+    public void decreaseTextSize(){
+        if(textSize > 6) { //don't go too small
+            this.textSize -= 2;
+            notifyDataSetChanged();
+        }
+    }
+    public void updateVerses(){
+        this.verses = verseDB.getChapter(currentChapter);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -31,6 +64,7 @@ public class VerseAdapter extends ArrayAdapter<String>{
         verseNum.setText(String.valueOf(position));
         TextView verseText = (TextView) pasukView.findViewById(R.id.verseText);
         verseText.setText(verses.get(position));
+        verseText.setTextSize(textSize);
         return pasukView;
     }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,13 +22,43 @@ import java.util.List;
 
 public class TorahTextView extends Activity {
 
-    private ScaleGestureDetector scaleGestureDetector;
+    //private ScaleGestureDetector scaleGestureDetector;
+    private VerseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_view);
         addVerses();
+        Button nextChapter = (Button) findViewById(R.id.nextChapter);
+        nextChapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.nextChapter();
+            }
+        });
+        Button previousChapter = (Button) findViewById(R.id.previousChapter);
+        previousChapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.previousChapter();
+            }
+        });
+        Button fontSmaller = (Button) findViewById(R.id.fontSmaller);
+        fontSmaller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.decreaseTextSize();
+            }
+        });
+        Button fontBigger = (Button) findViewById(R.id.fontBigger);
+        fontBigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.increaseTextSize();
+            }
+        });
+        /*
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.SimpleOnScaleGestureListener(){
             @Override
             public void onScaleEnd(ScaleGestureDetector detector) {
@@ -35,6 +66,7 @@ public class TorahTextView extends Activity {
                 Log.d("TorahTextView", "zoom ongoing, scale: " + detector.getScaleFactor());
             }
         });
+        */
     }
 
 
@@ -73,7 +105,7 @@ public class TorahTextView extends Activity {
 
     private void addVerses(){
         ListView list = (ListView) findViewById(R.id.listView);
-        ListAdapter adapter = new VerseAdapter(this, getVerses());
+        adapter = new VerseAdapter(this);
         list.setAdapter(adapter);
         verseClicked(list);
     }
@@ -89,7 +121,7 @@ public class TorahTextView extends Activity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        scaleGestureDetector.onTouchEvent(event);
+        //scaleGestureDetector.onTouchEvent(event);
         return true;
     }
 }
