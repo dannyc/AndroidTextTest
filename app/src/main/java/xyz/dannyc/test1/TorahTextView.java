@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,11 +31,15 @@ public class TorahTextView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_view);
         addVerses();
+        final TextView title = (TextView) findViewById(R.id.title);
+        title.setText("פרק" + " " + adapter.getCurrentChapter());
+
         Button nextChapter = (Button) findViewById(R.id.nextChapter);
         nextChapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter.nextChapter();
+                title.setText("פרק" + " " + adapter.getCurrentChapter());
             }
         });
         Button previousChapter = (Button) findViewById(R.id.previousChapter);
@@ -42,6 +47,7 @@ public class TorahTextView extends Activity {
             @Override
             public void onClick(View v) {
                 adapter.previousChapter();
+                title.setText("פרק" + " " + adapter.getCurrentChapter());
             }
         });
         Button fontSmaller = (Button) findViewById(R.id.fontSmaller);
@@ -91,7 +97,7 @@ public class TorahTextView extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     private List<String> getVerses(){
         ArrayList<String> verses = new ArrayList<String>();
         verses.add("בראשית ברא אלהים את השמים ואת הארץ");
@@ -102,7 +108,7 @@ public class TorahTextView extends Activity {
         verses.add("ויאמר אלהים יהי רקיע בתוך המים ויהי מבדיל בין מים למים");
         return verses;
     }
-
+*/
     private void addVerses(){
         ListView list = (ListView) findViewById(R.id.listView);
         adapter = new VerseAdapter(this);

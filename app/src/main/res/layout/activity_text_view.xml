@@ -5,6 +5,16 @@ android:layout_height="match_parent"
 android:paddingLeft="8dp"
 android:paddingRight="8dp">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Chapter"
+        android:id="@+id/title"
+        android:background="#ff4caf50"
+        android:textColor="#ffffffff"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
